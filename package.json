@@ -1,0 +1,26 @@
+{
+  "name": "intro2astro-server",
+  "version": "0.0.1",
+  "description": "Node back-end to handle Google Sheets API",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV='development' nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "~6.9.1",
+    "npm": "~3.10.8"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "google-spreadsheet": "^2.0.3",
+    "grant-express": "^3.6.5"
+  },
+  "devDependencies": {
+    "morgan": "^1.7.0",
+    "nodemon": "^1.11.0"
+  }
+}
