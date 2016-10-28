@@ -4,8 +4,8 @@
   "description": "Node back-end to handle Google Sheets API",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV='development' nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "export NODE_ENV='development' nodemon server.js",
+    "test": "mocha test/*.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,10 +16,13 @@
   "dependencies": {
     "express": "^4.14.0",
     "express-session": "^1.14.1",
-    "google-spreadsheet": "^2.0.3",
-    "grant-express": "^3.6.5"
+    "google-auth-library": "^0.9.9",
+    "node-fetch": "^1.6.3"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "mocha": "^3.1.2",
     "morgan": "^1.7.0",
     "nodemon": "^1.11.0"
   }
