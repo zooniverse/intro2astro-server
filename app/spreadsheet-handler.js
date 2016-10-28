@@ -1,4 +1,4 @@
-const config = require('./app-config');
+const config = require('./config');
 
 // TO DO, rewrite using own auth
 class SpreadsheetHandler {

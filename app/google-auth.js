@@ -28,12 +28,11 @@ class GoogleAuthentication {
   }
 
   httpRequest(endpoint, method, data) {
-    let headers = new Headers({
-      "Authorization": `Bearer ${this.googleAuthorization.value}`
-    });
+    let headers = {};
+    headers["Authorization"] = `Bearer ${this.googleAuthorization.value}`;
 
     if ( method === 'POST' || method === 'PUT' ) {
-      headers.append('Content-Type', 'application/json');
+      headers['Content-Type'] = 'application/json';
     }
 
     return fetch(endpoint, {
@@ -44,7 +43,7 @@ class GoogleAuthentication {
         if (response.ok) {
           return (response);
         } else {
-          return `Something went wrong: ${response.statusCode}: ${response.body}`;
+          return `Something went wrong: ${response.status}: ${response.statusText}`;
         }
       }).catch((error) => { console.error(`Something went wrong with the fetch: ${error}`); });
   }
