@@ -1,26 +1,23 @@
+const GoogleAuthentication = require('./google-auth');
 const config = require('./config');
 
-// TO DO, rewrite using own auth
 class SpreadsheetHandler {
   constructor() {
-    // this.setup(new GoogleSpreadsheet(config.sheetID));
-    this.sheet = null;
+    this.scope = ['https://www.googleapis.com/auth/spreadsheets'];
+    this.endpoint = 'https://sheets.googleapis.com/v4/spreadsheets/';
+    this.authenticator = new GoogleAuthentication(config.googleAuth, this.scope)
   }
 
-  // setup(doc) {
-  //   doc.useServiceAccountAuth(config.googleAuth, (err, res) => {
-  //     if (err) {
-  //       console.error(err)
-  //     }
+  getSheet(sheetID, query = {}) {
+    const endpointWithID = this.endpoint + sheetID;
+    
+    const getSheetPromise = this.authenticator.httpRequest(endpointWithID, 'GET', null, query)
+      .then((response) => {
+        return response;
+      }).catch((error) => { throw Error(error) });
 
-  //     doc.getInfo((err, res) => {
-  //       console.log('got a res', res);
-  //       this.sheet = res.worksheets[0];
-  //     });
-  //   });
-  // }
+    return getSheetPromise;
+  }
 }
 
-const sheet = new SpreadsheetHandler();
-
-module.export = sheet;
+module.exports = SpreadsheetHandler;
