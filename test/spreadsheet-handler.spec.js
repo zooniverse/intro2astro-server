@@ -24,13 +24,43 @@ describe('SpreadsheetHandler', function() {
 
   describe('#getSheet', function() {
     it('should return a spreadsheet', function() {
-      // this.timeout(5000);
       return spreadsheetHandler.getSheet(config.sheetID)
         .then((response) => {
           expect(response)
             .to.have.property('spreadsheetId')
             .that.is.a('string')
             .that.equals(config.sheetID);
+        });
+    });
+  });
+
+  describe('#getSheetValues', function() {
+    const range = "'Student Responses'!A1:A";
+
+    it('should return sheet values', function() {
+      return spreadsheetHandler.getSheetValues(config.sheetID, range)
+        .then((response) => {
+          expect(response).to.have.property('values')
+            .to.be.an.instanceof(Array);
+        });
+    });
+  });
+
+  describe('#appendRow', function() {
+    const values = [[
+      new Date(),
+      "Chicago, IL, United States",
+      "Adler Planetarium, Chicago, IL, United States",
+      "41.8781136",
+      "-87.6297982",
+      "41.8663817",
+      "-87.6066765"
+    ]];
+
+    it('should append sheet row', function() {
+      return spreadsheetHandler.appendRow(config.sheetID, values)
+        .then((response) => {
+          expect(response).to.have.deep.property('updates.updatedRows', 1);
         });
     });
   });

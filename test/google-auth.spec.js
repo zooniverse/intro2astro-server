@@ -1,6 +1,5 @@
 const mocha = require('mocha');
 const chai = require('chai');
-const chaiAsPromised = require("chai-as-promised");
 const expect = chai.expect;
 
 const GoogleAuth = require("google-auth-library");
@@ -49,6 +48,7 @@ describe('GoogleAuthentication', function() {
   });
 
   describe('#httpRequest', function() {
+    this.timeout(5000); // Doesn't seem right to have to increase timeout here...
     let endpoint = 'https://sheets.googleapis.com/v4/spreadsheets/';
 
     it('should make a GET request to Google Sheets API', function() {
