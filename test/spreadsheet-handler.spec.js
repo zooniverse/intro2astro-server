@@ -54,14 +54,19 @@ describe('SpreadsheetHandler', function() {
       "41.8781136",
       "-87.6297982",
       "41.8663817",
-      "-87.6066765"
+      "-87.6066765",
+      null
     ]];
 
     it('should append sheet row', function() {
-      return spreadsheetHandler.appendRow(config.sheetID, values)
-        .then((response) => {
-          expect(response).to.have.deep.property('updates.updatedRows', 1);
-        });
+      return spreadsheetHandler.getSheet(config.sheetID).then((data) => {
+        return `'Student Responses'!A1:H${data.sheets[0].properties.gridProperties.rowCount}`
+      }).then((range) => {
+        return spreadsheetHandler.appendRow(config.sheetID, values, range)
+          .then((response) => {
+            expect(response).to.have.deep.property('updates.updatedRows', 1);
+          });
+      });
     });
   });
 });
