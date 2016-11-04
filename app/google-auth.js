@@ -39,17 +39,19 @@ class GoogleAuthentication {
       headers['Content-Type'] = 'application/json';
     }
 
-    return agent(method, endpoint)
-      .set(headers)
-      .query(query)
-      .send(method === 'POST' || method === 'PUT' ? data : null)
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(`${response.status}: ${response.statusText}`);
-        }
+    return this.useJwtAuth().then(() => {
+      return agent(method, endpoint)
+        .set(headers)
+        .query(query)
+        .send(method === 'POST' || method === 'PUT' ? data : null)
+        .then((response) => {
+          if (!response.ok) {
+            throw Error(`${response.status}: ${response.statusText}`);
+          }
 
-        return response.body
-      }).catch((error) => { throw Error(`Error with fetch: ${error}`); });
+          return response.body
+        }).catch((error) => { throw Error(`Error with fetch: ${error}`); });
+    })
   }
 }
 

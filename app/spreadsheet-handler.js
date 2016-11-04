@@ -30,28 +30,14 @@ class SpreadsheetHandler {
     return getValuesPromise;
   }
 
-  appendRow(sheetID, values, range = null, query = { insertDataOption: 'INSERT_ROWS', valueInputOption: 'RAW' }) {
+  appendRow(sheetID, values, range, query = { insertDataOption: 'INSERT_ROWS', valueInputOption: 'RAW' }) {
     let endpointForAppend = this.endpoint + sheetID + '/values/' + range + ':append';
-    let writePromise;
+    const valuesToSend = { values: values, majorDimension: "ROWS" };
 
-    if (!!range) {
-      writePromise = getSheet(sheetID)
-        .then((data) => {
-          endpointForAppend = this.endpoint + sheetID + "/values/'Student%20Responses'!A1:H" + data.sheets[0].gridProperties.rowCount + ':append';
-        }).then(() => {
-          this.authenticator.httpRequest(endpointForAppend, 'POST', values, query)
-            .then((response) => {
-              return response;
-            }).catch((error) => { throw Error(error) });
-        })
-    } else {
-      writePromise = this.authenticator.httpRequest(endpointForAppend, 'POST', values, query)
-        .then((response) => {
-          return response;
-        }).catch((error) => { throw Error(error) });
-    }
-
-    return writePromise;
+    return this.authenticator.httpRequest(endpointForAppend, 'POST', valuesToSend, query)
+      .then((response) => {
+        return response;
+      }).catch((error) => { throw Error(error) });
   }
 }
 
