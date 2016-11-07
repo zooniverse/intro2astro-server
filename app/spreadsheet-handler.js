@@ -22,16 +22,15 @@ class SpreadsheetHandler {
   getSheetValues(sheetID, range, query = {}) {
     const endpointForValues = this.endpoint + sheetID + '/values/' + range;
 
-    const getValuesPromise = this.authenticator.httpRequest(endpointForValues, 'GET', null, query)
+    return this.authenticator.httpRequest(endpointForValues, 'GET', null, query)
       .then((response) => {
         return response;
       }).catch((error) => { throw Error(error) });
 
-    return getValuesPromise;
   }
 
   appendRow(sheetID, values, range, query = { insertDataOption: 'INSERT_ROWS', valueInputOption: 'RAW' }) {
-    let endpointForAppend = this.endpoint + sheetID + '/values/' + range + ':append';
+    const endpointForAppend = this.endpoint + sheetID + '/values/' + range + ':append';
     const valuesToSend = { values: values, majorDimension: "ROWS" };
 
     return this.authenticator.httpRequest(endpointForAppend, 'POST', valuesToSend, query)

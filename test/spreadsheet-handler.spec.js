@@ -59,6 +59,8 @@ describe('SpreadsheetHandler', function() {
     ]];
 
     it('should append sheet row', function() {
+      this.timeout(5000); // Dislike
+
       return spreadsheetHandler.getSheet(config.sheetID).then((data) => {
         return `'Student Responses'!A1:H${data.sheets[0].properties.gridProperties.rowCount}`
       }).then((range) => {
